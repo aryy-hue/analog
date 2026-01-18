@@ -35,7 +35,7 @@ class Database:
     def get_all(self):
         return self.data
 
-    def find_by_title(self):
+    def find_by_title(self, title):
         for item in self.data:
             if item['title'].lower() == title.lower():
                 return item
@@ -43,12 +43,12 @@ class Database:
 
     def update_item(self, old_title, new_item_dict):
         for i, item in enumerate(self.data):
-            if item['item'].lower() == old_title.lower():
+            if item['title'].lower() == old_title.lower():
                 self.data[i] = new_item_dict
                 self.save()
                 return True
             
-            return False
+        return False
 
     def delete_item(self, title):
         for i, item in enumerate(self.data):
@@ -56,4 +56,4 @@ class Database:
                 del self.data[i]
                 self.save()
                 return True
-            return False
+        return False

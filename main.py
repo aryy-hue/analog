@@ -10,6 +10,7 @@ def cli():
     "Track your movies and TV shows now!"
     pass
 
+    
 @cli.command()
 @click.argument('title')
 @click.option('--type','-t', default='series', type=click.Choice(['series','movie']))
@@ -71,7 +72,7 @@ def update(title,season,episode,status):
     if status is not None:
         item_data['status']= status
     if db.update_item(title,item_data):
-        print(f"Error updating{title}")
+        print(f"Title {title} has been updated")
     else:
         print(f"Error updating {title}")
 
@@ -112,13 +113,30 @@ def next_episode(title):
 @click.argument('title')
 def complete(title):
     "Mark as complete"
-    update(title, status='completed')
+    item_data = db.find_by_title(title)
+    if not item_data:
+        print(f"Error: {title} not found")
+        return
+    
+    item_data['status'] = 'completed'
+    if db.update_item(title, item_data):
+        print(f"Marked as completed: {title}")
+    else:
+        print(f"Error updating {title}")
 
 @cli.command()
 @click.argument('title')
 def drop(title):
     "Mark a show as dropped"
-    update(title, status='dropped')
+    item_data = db.find_by_title(title)
+    if not item_data:
+        print(f"Error: {title} not found")
+        return
+    item_data['status']='dropped'
+    if db.update_item(title, item_data):
+        print(f"Marked as dropped: {title}")
+    else:
+        print(f"Error when dropping {title}")
 
 if __name__ == "__main__":
     cli()
