@@ -28,9 +28,9 @@ class Database:
             if existing['title'].lower() == item.title.lower():
                 return False
         
-            self.data.append(item.to_dict())
-            self.save()
-            return True
+        self.data.append(item.to_dict())
+        self.save()
+        return True
 
     def get_all(self):
         return self.data

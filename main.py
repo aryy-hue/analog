@@ -14,7 +14,7 @@ def cli():
 @click.argument('title')
 @click.option('--type','-t', default='series', type=click.Choice(['series','movie']))
 @click.option('--season','-s', default=1, type=int)
-@click.option('--episode','-e',default=1, type=int)
+@click.option('--episode','-e',default=0, type=int)
 def add(title, type, season, episode):
     "Add new show or movie"
     item = WatchItem(title, item_type=type, season=season, episode=episode)
@@ -26,7 +26,7 @@ def add(title, type, season, episode):
 @cli.command()
 @click.option('--status', default='watching', type=click.Choice(['all','watching','completed','dropped']))
 
-def list(status):
+def list_items(status):
     "List all tracked items"
     items = db.get_all()
 
@@ -56,7 +56,7 @@ def list(status):
 @click.argument('title')
 @click.option('--season','-s', type=int)
 @click.option('--episode','-e',type=int)
-@click.option('--status', type=click.Choice(['all','watching','completed','dropped']))
+@click.option('--status', type=click.Choice(['watching','completed','dropped']))
 def update(title,season,episode,status):
     "Update a shows progress"
     item_data = db.find_by_title(title)
@@ -72,10 +72,12 @@ def update(title,season,episode,status):
         item_data['status']= status
     if db.update_item(title,item_data):
         print(f"Error updating{title}")
+    else:
+        print(f"Error updating {title}")
 
 @cli.command()
 @click.argument('title', required=False)
-def next(title):
+def next_episode(title):
     "Show next episodes to watch"
     items = db.get_all()
     if not items:
@@ -88,7 +90,7 @@ def next(title):
             print(f"Error: {title} not found")
             return
         if item_data['type'] != 'series':
-            print(f"{title} is a movie, not a seres")
+            print(f"{title} is a movie, not a series")
             return
         if item_data['status'] != 'watching':
             print(f"{title} is not currently being watched")
