@@ -51,7 +51,7 @@ def get_type_icon(item_type):
 
 @click.group()
 def cli():
-    """Analog - Track your movies and TV shows!"""
+    """Analog - Track your movies and TV shows"""
     banner = f"""
 {Fore.CYAN}╔══════════════════════════════════════╗
 ║              A N A L O G             ║
@@ -97,7 +97,7 @@ def list_items(status):
         return
 
     status_emoji = get_status_emoji(status)
-    print_header(f"{status_emoji} {status.upper()} WATCHLIST ({len(filtered_items)} items)")
+    print_header(f"{status.upper()} WATCHLIST ({len(filtered_items)} items)")
     
     print(f"{Fore.CYAN}{Style.BRIGHT}{'':<2} {'TITLE':<30} {'TYPE':<8} {'PROGRESS':<15} {'STATUS':<10}{Style.RESET_ALL}")
     print(f"{Fore.CYAN}{'-' * 70}{Style.RESET_ALL}")
