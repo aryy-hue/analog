@@ -12,11 +12,6 @@ A simple CLI tool to track your movies and TV shows. Fast, lightweight, and stor
 - **Next** - See what episode to watch next
 - **Complete** - Mark as finished
 - **Drop** - Mark as dropped
-- **Search** - Search by title
-- **Stats** - View watching statistics
-- **Rate** - Rate shows 1-10
-- **Note** - Add personal notes
-- **Export/Import** - Backup your data
 
 ## Installation
 
